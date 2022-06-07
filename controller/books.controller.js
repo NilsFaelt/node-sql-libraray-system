@@ -5,8 +5,18 @@ async function getAllBooks(req, res) {
   const books = await booksModel.getAll();
   if (!books) {
     res.status(404).json({ info: "Couldtn get books" });
+    return;
   }
   res.status(200).json({ books: books });
+}
+
+async function getOneBook(req, res) {
+  const book = await booksModel.getOneBook(req.params.id);
+  if (!book) {
+    res.status(404).json({ info: "couldnt find book make sure id is valid" });
+    return;
+  }
+  res.status(200).json({ info: "book found", book: book });
 }
 
 function addBook(req, res) {
@@ -37,4 +47,10 @@ function updatePartialBook(req, res) {
   booksModel.updateBookPartial(req.params.id, req.body.title);
   res.send(req.params.id);
 }
-module.exports = { getAllBooks, addBook, deleteBook, updatePartialBook };
+module.exports = {
+  getAllBooks,
+  addBook,
+  deleteBook,
+  updatePartialBook,
+  getOneBook,
+};

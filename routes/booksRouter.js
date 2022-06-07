@@ -3,9 +3,7 @@ const router = express.Router();
 const booksController = require("../controller/books.controller");
 
 router.get("/", booksController.getAllBooks);
-router.get("/:id", (req, res) => {
-  res.send("get one book");
-});
+router.get("/:id", booksController.getOneBook);
 router.post("/", booksController.addBook);
 
 router.put("/:id", (req, res) => {

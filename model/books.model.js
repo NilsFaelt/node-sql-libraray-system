@@ -16,6 +16,20 @@ function getAll() {
   });
 }
 
+function getOneBook(id) {
+  const sql = `SELECT * FROM books WHERE id = ${id}`;
+  return new Promise((resolve, reject) => {
+    db.get(sql, (error, rows) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+      }
+      console.log(rows);
+      resolve(rows);
+    });
+  });
+}
+
 function addBook(title, author, genre) {
   const insert = `INSERT INTO books(title, author, genre, id) VALUES(?,?,?,?) `;
   db.run(insert, [title, author, genre]);
@@ -50,4 +64,4 @@ function updateBookPartial(id, title) {
   db.run(updateSql);
 }
 
-module.exports = { getAll, addBook, deltedBook, updateBookPartial };
+module.exports = { getAll, addBook, deltedBook, updateBookPartial, getOneBook };
