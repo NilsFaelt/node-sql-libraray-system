@@ -14,8 +14,6 @@ router.put("/:id", (req, res) => {
 router.patch("/:id", (req, res) => {
   res.send("change book full");
 });
-router.delete("/:id", (req, res) => {
-  res.send(" delete book ");
-});
+router.delete("/:id", booksController.deleteBook);
 
 module.exports = { router };

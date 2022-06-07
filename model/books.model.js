@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const db = require("../db/db");
 
 function getAll() {
@@ -19,4 +20,26 @@ function addBook(title, author, genre) {
   db.run(insert, [title, author, genre]);
 }
 
-module.exports = { getAll, addBook };
+function deltedBook(id) {
+  const sqlDelete = `DELETE FROM books WHERE id = ${id}`;
+  const sql = `SELECT * FROM books WHERE id = ${id}`;
+  return new Promise((resolve, reject) => {
+    db.get(sql, (error, rows) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+      }
+      console.log(rows);
+      resolve(rows);
+    });
+    db.run(sqlDelete, (error) => {
+      if (error) {
+        console.log(error.message);
+      }
+      console.log("succesfully deleted");
+    });
+  });
+  //   res.send("successs");
+}
+
+module.exports = { getAll, addBook, deltedBook };

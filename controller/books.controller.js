@@ -6,7 +6,6 @@ async function getAllBooks(req, res) {
   if (!books) {
     res.status(404).json({ info: "Couldtn get books" });
   }
-  console.log(books, "booooooooooooks");
   res.status(200).json({ books: books });
 }
 
@@ -23,4 +22,14 @@ function addBook(req, res) {
     .json({ info: "book successfully added", bookAdded: req.body });
 }
 
-module.exports = { getAllBooks, addBook };
+async function deleteBook(req, res) {
+  const book = await booksModel.deltedBook(req.params.id);
+  if (book) {
+    res.status(200).json({ info: "succesfully deleted", book: book });
+  } else {
+    res.status(404).json({
+      info: "couldnt delet book make sure id is valid, and that book exists",
+    });
+  }
+}
+module.exports = { getAllBooks, addBook, deleteBook };
