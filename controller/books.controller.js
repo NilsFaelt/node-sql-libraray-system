@@ -47,10 +47,21 @@ function updatePartialBook(req, res) {
   booksModel.updateBookPartial(req.params.id, req.body.title);
   res.send(req.params.id);
 }
+
+function updateBookFull(req, res) {
+  booksModel.changeBookFull(
+    req.params.id,
+    req.body.title,
+    req.body.author,
+    req.body.genre
+  );
+  res.send(req.params.id);
+}
 module.exports = {
   getAllBooks,
   addBook,
   deleteBook,
   updatePartialBook,
   getOneBook,
+  updateBookFull,
 };

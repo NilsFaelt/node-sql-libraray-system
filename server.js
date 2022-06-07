@@ -17,8 +17,6 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-// POST /books - Skapa en bok
-// GET /books/:id - Hämta en bok
 // PUT /books/:id - Ändra en bok (full)
-// PATCH /books/:id - Ändra en bok (partial)
-// DELETE /books/:id - Ta bort en bok
+
+// Add response and middlewraes to put and patch
