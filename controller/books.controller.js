@@ -32,4 +32,9 @@ async function deleteBook(req, res) {
     });
   }
 }
-module.exports = { getAllBooks, addBook, deleteBook };
+
+function updatePartialBook(req, res) {
+  booksModel.updateBookPartial(req.params.id, req.body.title);
+  res.send(req.params.id);
+}
+module.exports = { getAllBooks, addBook, deleteBook, updatePartialBook };

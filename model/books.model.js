@@ -1,3 +1,4 @@
+const { json } = require("express/lib/response");
 const res = require("express/lib/response");
 const db = require("../db/db");
 
@@ -39,7 +40,14 @@ function deltedBook(id) {
       console.log("succesfully deleted");
     });
   });
-  //   res.send("successs");
 }
 
-module.exports = { getAll, addBook, deltedBook };
+function updateBookPartial(id, title) {
+  const newTitle = title;
+  console.log(newTitle);
+  const updateSql = `UPDATE books SET title = ${newTitle} WHERE id = ${id}`;
+  console.log(id, newTitle);
+  db.run(updateSql);
+}
+
+module.exports = { getAll, addBook, deltedBook, updateBookPartial };

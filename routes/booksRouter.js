@@ -11,9 +11,7 @@ router.post("/", booksController.addBook);
 router.put("/:id", (req, res) => {
   res.send("change book");
 });
-router.patch("/:id", (req, res) => {
-  res.send("change book full");
-});
+router.patch("/:id", booksController.updatePartialBook);
 router.delete("/:id", booksController.deleteBook);
 
 module.exports = { router };
