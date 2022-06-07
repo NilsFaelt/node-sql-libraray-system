@@ -57,15 +57,23 @@ function deltedBook(id) {
 
 function updateBookPartial(id, newTitle) {
   console.log(newTitle);
-  const updateSql = `UPDATE books SET title = ${newTitle} WHERE id = ${id}`;
-  console.log(id, newTitle);
+  const updateSql = `UPDATE books SET title = '${newTitle}' WHERE id = ${id}`;
   db.run(updateSql);
 }
 
 function changeBookFull(id, title, author, genre) {
-  const updateSql = `UPDATE books SET title = ${title}, author = ${author}, genre = ${genre}  WHERE id = ${id}`;
-  db.run(updateSql);
-  console.log(id, title, author, genre);
+  const updateSql = `UPDATE books SET title = '${title}', author = '${author}', genre = '${genre}'  WHERE id = ${id}`;
+  if (!title) {
+    console.log("failure");
+    return;
+  }
+  db.run(updateSql, (err) => {
+    if (err) {
+      console.log(err.message);
+      return;
+    }
+    console.log("suceefully updated book");
+  });
 }
 
 module.exports = {
