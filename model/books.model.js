@@ -14,4 +14,9 @@ function getAll() {
   });
 }
 
-module.exports = { getAll };
+function addBook(title, author, genre) {
+  const insert = `INSERT INTO books(title, author, genre, id) VALUES(?,?,?,?) `;
+  db.run(insert, [title, author, genre]);
+}
+
+module.exports = { getAll, addBook };
