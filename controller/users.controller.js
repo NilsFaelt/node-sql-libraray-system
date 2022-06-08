@@ -29,8 +29,16 @@ async function registerUser(req, res) {
 }
 
 async function loginUser(req, res) {
-  usersModel.loginUser(req.body.username, req.body.password);
-  res.send("login");
+  const user = await usersModel.loginUser(req.body.username, req.body.password);
+  if (user) {
+    res.json({ info: "logedin succesfullly", userLogedIn: user });
+  } else {
+    res
+      .status(404)
+      .json({
+        info: "couldnt login, make sure username and password is correct",
+      });
+  }
 }
 
 module.exports = { getUsers, registerUser, loginUser };

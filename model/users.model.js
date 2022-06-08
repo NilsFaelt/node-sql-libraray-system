@@ -33,6 +33,17 @@ function addUser(name, age, email, username, password) {
   });
 }
 
-function loginUser(username, passwors) {}
+function loginUser(username, password) {
+  const sql = `SELECT * FROM users WHERE username = ? AND password = ? `;
+  return new Promise((resolve, reject) => {
+    db.get(sql, [username, md5(password)], (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      resolve(rows);
+    });
+  });
+}
 
 module.exports = { getUsers, addUser, loginUser };
