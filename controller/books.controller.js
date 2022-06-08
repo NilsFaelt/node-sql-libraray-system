@@ -32,7 +32,8 @@ function addBook(req, res) {
 }
 
 async function deleteBook(req, res) {
-  const book = await booksModel.deltedBook(req.params.id);
+  const book = await booksModel.getOneBook(req.params.id);
+  await booksModel.deltedBook(req.params.id);
   if (book) {
     res.status(200).json({ info: "succesfully deleted", book: book });
   } else {
@@ -42,8 +43,9 @@ async function deleteBook(req, res) {
   }
 }
 
-function updatePartialBook(req, res) {
-  if (!req.params.id || !req.body.title) {
+async function updatePartialBook(req, res) {
+  const book = await booksModel.getOneBook(req.params.id);
+  if (!req.params.id || (!req.body.title && book)) {
     res
       .status(404)
       .json({ info: "make sure both id and title is corecctly passed in" });
@@ -52,12 +54,13 @@ function updatePartialBook(req, res) {
   res.status(200).json({ info: "book succesfully updated", updated: req.body });
 }
 
-function updateBookFull(req, res) {
+async function updateBookFull(req, res) {
+  const book = await booksModel.getOneBook(req.params.id);
   if (
     !req.params.id ||
     !req.body.title ||
     !req.body.author ||
-    !req.body.genre
+    (!req.body.genre && book)
   ) {
     res.status(404).json({
       info: "make sure id, title, author and genre is corecctly passed in",

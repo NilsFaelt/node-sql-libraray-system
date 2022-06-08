@@ -36,21 +36,15 @@ function addBook(title, author, genre) {
 
 function deltedBook(id) {
   const sqlDelete = `DELETE FROM books WHERE id = ${id}`;
-  const sql = `SELECT * FROM books WHERE id = ${id}`;
+
   return new Promise((resolve, reject) => {
-    db.get(sql, (error, rows) => {
-      if (error) {
-        console.log(error);
-        reject(error);
-      }
-      console.log(rows);
-      resolve(rows);
-    });
     db.run(sqlDelete, (error) => {
       if (error) {
         console.log(error.message);
+        reject(error);
       }
       console.log("succesfully deleted");
+      resolve();
     });
   });
 }
