@@ -1,5 +1,4 @@
 const sqlite3 = require("sqlite3").verbose();
-const md5 = require("md5");
 
 const statement = `CREATE TABLE books (title TEXT, author TEXT, genre TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT)`;
 const createUserTable = `CREATE TABLE users(name TEXT, age INTEGER, email TEXT, username TEXT, password TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT )`;

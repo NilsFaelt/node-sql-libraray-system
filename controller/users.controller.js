@@ -28,4 +28,9 @@ async function registerUser(req, res) {
   res.status(200).json({ info: "user created", userinfo: req.body });
 }
 
-module.exports = { getUsers, registerUser };
+async function loginUser(req, res) {
+  usersModel.loginUser(req.body.username, req.body.password);
+  res.send("login");
+}
+
+module.exports = { getUsers, registerUser, loginUser };

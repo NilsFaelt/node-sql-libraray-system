@@ -1,5 +1,6 @@
 const db = require("../db/db");
 const md5 = require("md5");
+const res = require("express/lib/response");
 
 function getUsers() {
   const sql = `SELECT * FROM users`;
@@ -32,4 +33,6 @@ function addUser(name, age, email, username, password) {
   });
 }
 
-module.exports = { getUsers, addUser };
+function loginUser(username, passwors) {}
+
+module.exports = { getUsers, addUser, loginUser };

@@ -20,4 +20,21 @@ function getOne(req, res, next) {
   });
 }
 
-module.exports = { getOne };
+function checkIfUserExists(req, res, next) {
+  const sql = `SELECT * FROM users WHERE username = ? OR email = ?`;
+  db.get(sql, [req.body.username, req.body.email], (error, rows) => {
+    if (error) {
+      console.error(error.message);
+      return;
+    }
+    const user = rows;
+    console.log(user);
+    if (user) {
+      res.status(404).json({ info: "username or email already exists" });
+    } else {
+      next();
+    }
+  });
+}
+
+module.exports = { getOne, checkIfUserExists };
