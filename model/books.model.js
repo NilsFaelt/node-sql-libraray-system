@@ -56,17 +56,15 @@ function deltedBook(id) {
 }
 
 function updateBookPartial(id, newTitle) {
+  // make sure id exists
   console.log(newTitle);
   const updateSql = `UPDATE books SET title = '${newTitle}' WHERE id = ${id}`;
   db.run(updateSql);
 }
 
 function changeBookFull(id, title, author, genre) {
+  // make sure id exists
   const updateSql = `UPDATE books SET title = '${title}', author = '${author}', genre = '${genre}'  WHERE id = ${id}`;
-  if (!title) {
-    console.log("failure");
-    return;
-  }
   db.run(updateSql, (err) => {
     if (err) {
       console.log(err.message);

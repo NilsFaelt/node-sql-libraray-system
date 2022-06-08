@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const booksModel = require("../model/books.model");
 
 async function getAllBooks(req, res) {
@@ -44,18 +43,33 @@ async function deleteBook(req, res) {
 }
 
 function updatePartialBook(req, res) {
+  if (!req.params.id || !req.body.title) {
+    res
+      .status(404)
+      .json({ info: "make sure both id and title is corecctly passed in" });
+  }
   booksModel.updateBookPartial(req.params.id, req.body.title);
-  res.send(req.params.id);
+  res.status(200).json({ info: "book succesfully updated", updated: req.body });
 }
 
 function updateBookFull(req, res) {
+  if (
+    !req.params.id ||
+    !req.body.title ||
+    !req.body.author ||
+    !req.body.genre
+  ) {
+    res.status(404).json({
+      info: "make sure id, title, author and genre is corecctly passed in",
+    });
+  }
   booksModel.changeBookFull(
     req.params.id,
     req.body.title,
     req.body.author,
     req.body.genre
   );
-  res.send(req.params.id);
+  res.status(200).json({ info: "book succesfully updated", updated: req.body });
 }
 module.exports = {
   getAllBooks,
