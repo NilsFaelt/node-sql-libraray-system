@@ -8,10 +8,16 @@ function getOne(req, res, next) {
       console.error(error.message);
       return;
     }
-    console.log(rows);
+    const book = rows;
+    console.log(book);
+    if (book) {
+      next();
+    } else {
+      res
+        .status(404)
+        .json({ info: "couldnt find book make sure id is correct" });
+    }
   });
-
-  next();
 }
 
 module.exports = { getOne };
