@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const db = require("../db/db");
 
 function getAll() {
@@ -50,16 +49,13 @@ function deltedBook(id) {
 }
 
 function updateBookPartial(id, newTitle) {
-  // make sure id exists
-  console.log(newTitle);
-  const updateSql = `UPDATE books SET title = '${newTitle}' WHERE id = ${id}`;
-  db.run(updateSql);
+  const updateSql = `UPDATE books SET title = ? WHERE id = ?`;
+  db.run(updateSql, [newTitle, id]);
 }
 
 function changeBookFull(id, title, author, genre) {
-  // make sure id exists
-  const updateSql = `UPDATE books SET title = '${title}', author = '${author}', genre = '${genre}'  WHERE id = ${id}`;
-  db.run(updateSql, (err) => {
+  const updateSql = `UPDATE books SET title = ?, author = ?, genre = ? WHERE id = ?`;
+  db.run(updateSql, [title, author, genre, id], (err) => {
     if (err) {
       console.log(err.message);
       return;
