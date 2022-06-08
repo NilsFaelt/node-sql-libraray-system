@@ -16,7 +16,3 @@ app.use("/books", bookRouter.router);
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
-// PUT /books/:id - Ändra en bok (full)
-
-// Add response and middlewraes to put and patch
