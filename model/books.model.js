@@ -63,6 +63,18 @@ function changeBookFull(id, title, author, genre) {
     console.log("suceefully updated book");
   });
 }
+function lendBook(title) {
+  const sql = `SELECT * FROM books WHERE title = ? `;
+  return new Promise((resolve, reject) => {
+    db.get(sql, [title], (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      resolve(rows);
+    });
+  });
+}
 
 module.exports = {
   getAll,
@@ -71,4 +83,5 @@ module.exports = {
   updateBookPartial,
   getOneBook,
   changeBookFull,
+  lendBook,
 };

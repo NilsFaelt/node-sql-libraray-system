@@ -1,4 +1,5 @@
 const usersModel = require("../model/users.model");
+const bookModel = require("../model/books.model");
 const jwt = require("jsonwebtoken");
 
 async function getUsers(req, res) {
@@ -41,4 +42,14 @@ async function loginUser(req, res) {
   }
 }
 
-module.exports = { getUsers, registerUser, loginUser };
+async function lendBook(req, res) {
+  const lendedBook = await bookModel.lendBook(req.body.title);
+  if (!lendedBook) {
+    res.status(404).json({ info: "couldnt find book, make sure book exists" });
+    return;
+  }
+  console.log(lendedBook.id, req.body.userId);
+  res.status(200).json({ info: "book lended", lendedBook: lendedBook });
+}
+
+module.exports = { getUsers, registerUser, loginUser, lendBook };
