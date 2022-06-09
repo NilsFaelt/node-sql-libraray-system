@@ -1,4 +1,5 @@
 const usersModel = require("../model/users.model");
+const jwt = require("jsonwebtoken");
 
 async function getUsers(req, res) {
   const users = await usersModel.getUsers();
@@ -31,13 +32,12 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
   const user = await usersModel.loginUser(req.body.username, req.body.password);
   if (user) {
-    res.json({ info: "logedin succesfullly", userLogedIn: user });
+    const token = jwt.sign({ user }, process.env.ACCES_TOKEN_SECRET);
+    res.json({ jwtToken: token });
   } else {
-    res
-      .status(404)
-      .json({
-        info: "couldnt login, make sure username and password is correct",
-      });
+    res.status(404).json({
+      info: "couldnt login, make sure username and password is correct",
+    });
   }
 }
 
