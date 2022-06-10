@@ -51,7 +51,11 @@ async function updatePartialBook(req, res) {
       .json({ info: "make sure both id and title is corecctly passed in" });
   }
   booksModel.updateBookPartial(req.params.id, req.body.title);
-  res.status(200).json({ info: "book succesfully updated", updated: req.body });
+  res.status(200).json({
+    info: "book succesfully updated",
+    updated: book,
+    withinfo: req.body,
+  });
 }
 
 async function updateBookFull(req, res) {
@@ -72,7 +76,11 @@ async function updateBookFull(req, res) {
     req.body.author,
     req.body.genre
   );
-  res.status(200).json({ info: "book succesfully updated", updated: req.body });
+  res.status(200).json({
+    info: "book succesfully updated",
+    updated: book,
+    withinfo: req.body,
+  });
 }
 module.exports = {
   getAllBooks,

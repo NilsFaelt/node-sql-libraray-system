@@ -44,9 +44,8 @@ async function loginUser(req, res) {
 
 async function lendBook(req, res) {
   let lendedBook = await bookModel.lendBook(req.body.title);
-  lendedBook.usersid = req.body.userId;
-  console.log(lendedBook);
   if (lendedBook) {
+    lendedBook.usersid = req.body.userId;
     await bookModel.lendedBooks(
       lendedBook.title,
       lendedBook.author,

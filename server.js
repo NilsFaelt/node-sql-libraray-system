@@ -25,3 +25,7 @@ app.use("/me", middlewares.authorizedToUseRoutes, usersInfoRouter.router);
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+// POST /users/lend - Låna ut en bok (authorized route)
+// POST /users/return - Lämna tillbaka en bok (authorized route)
+// GET /me - Användarens aktiva lånade böcker och användar-info (authorized route)
