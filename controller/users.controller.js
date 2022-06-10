@@ -76,4 +76,23 @@ async function getUsersInfo(req, res) {
   res.status(404).json({ info: " couldnt find user" });
 }
 
-module.exports = { getUsers, registerUser, loginUser, lendBook, getUsersInfo };
+async function returnBook(req, res) {
+  const deletedBook = await bookModel.lendedBook(req.body.userId);
+  if (!deletedBook) {
+    res.status(404).json({
+      info: "couldnt find book to return, make sure evrything is correct",
+    });
+    return;
+  }
+  bookModel.returnBook(req.body.userId);
+  res.status(200).json({ returnedBook: deletedBook });
+}
+
+module.exports = {
+  getUsers,
+  registerUser,
+  loginUser,
+  lendBook,
+  getUsersInfo,
+  returnBook,
+};

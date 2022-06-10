@@ -102,6 +102,19 @@ function lendedBooks(title, author, genre, usersid) {
   });
 }
 
+function returnBook(usersid) {
+  const insert = `DELETE FROM lendedbooks WHERE usersid = ${usersid}`;
+  return new Promise((resolve, reject) => {
+    db.run(insert, (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      resolve(rows);
+    });
+  });
+}
+
 module.exports = {
   getAll,
   addBook,
@@ -112,4 +125,5 @@ module.exports = {
   lendBook,
   lendedBook,
   lendedBooks,
+  returnBook,
 };
