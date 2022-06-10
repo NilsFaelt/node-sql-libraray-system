@@ -43,13 +43,38 @@ async function loginUser(req, res) {
 }
 
 async function lendBook(req, res) {
-  const lendedBook = await bookModel.lendBook(req.body.title);
-  if (!lendedBook) {
+  let lendedBook = await bookModel.lendBook(req.body.title);
+  lendedBook.usersid = req.body.userId;
+  console.log(lendedBook);
+  if (lendedBook) {
+    await bookModel.lendedBooks(
+      lendedBook.title,
+      lendedBook.author,
+      lendedBook.genre,
+      lendedBook.usersid
+    );
+    res.status(200).json({ info: "book lended", lendedBook: lendedBook });
+  } else if (!lendedBook) {
     res.status(404).json({ info: "couldnt find book, make sure book exists" });
-    return;
   }
-  console.log(lendedBook.id, req.body.userId);
-  res.status(200).json({ info: "book lended", lendedBook: lendedBook });
 }
 
-module.exports = { getUsers, registerUser, loginUser, lendBook };
+async function getUsersInfo(req, res) {
+  let book;
+  const user = await usersModel.getUser(req.body.userId);
+  console.log(user);
+  if (user) {
+    book = await bookModel.lendedBook(user.id);
+  }
+  console.log(book);
+  if (user && book) {
+    res.status(200).json({ user: user, lendedBooks: book });
+    return;
+  } else if (user) {
+    res.status(200).json({ user: user, lendedBooks: "no books lended" });
+    return;
+  }
+  res.status(404).json({ info: " couldnt find user" });
+}
+
+module.exports = { getUsers, registerUser, loginUser, lendBook, getUsersInfo };

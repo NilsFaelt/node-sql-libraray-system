@@ -75,6 +75,32 @@ function lendBook(title) {
     });
   });
 }
+function lendedBook(id) {
+  const sql = `SELECT * FROM lendedbooks WHERE usersid = ?`;
+  return new Promise((resolve, reject) => {
+    db.get(sql, [id], (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      resolve(rows);
+      console.log(rows, "rowsss");
+    });
+  });
+}
+
+function lendedBooks(title, author, genre, usersid) {
+  const insert = `INSERT INTO lendedbooks(title, author, genre, usersid) VALUES(?,?,?,?)`;
+  return new Promise((resolve, reject) => {
+    db.get(insert, [title, author, genre, usersid], (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      resolve(rows);
+    });
+  });
+}
 
 module.exports = {
   getAll,
@@ -84,4 +110,6 @@ module.exports = {
   getOneBook,
   changeBookFull,
   lendBook,
+  lendedBook,
+  lendedBooks,
 };

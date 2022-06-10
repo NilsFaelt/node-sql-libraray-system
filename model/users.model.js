@@ -15,6 +15,20 @@ function getUsers() {
     });
   });
 }
+function getUser(id) {
+  console.log(id);
+  const sql = `SELECT * FROM users WHERE id = ?`;
+  return new Promise((resolve, reject) => {
+    db.get(sql, [id], (error, rows) => {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+      console.log(rows);
+      resolve(rows);
+    });
+  });
+}
 
 function addUser(name, age, email, username, password) {
   const addUserSql = `INSERT INTO users(name, age, email, username, password, id) VALUES(?,?,?,?,?,?)`;
@@ -46,4 +60,4 @@ function loginUser(username, password) {
   });
 }
 
-module.exports = { getUsers, addUser, loginUser };
+module.exports = { getUsers, addUser, loginUser, getUser };
